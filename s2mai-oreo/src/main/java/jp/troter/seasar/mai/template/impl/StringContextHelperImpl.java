@@ -15,6 +15,9 @@
  */
 package jp.troter.seasar.mai.template.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jp.troter.seasar.mai.template.StringTemplate;
 
 import org.seasar.mai.template.ContextHelper;
@@ -23,8 +26,11 @@ public class StringContextHelperImpl implements ContextHelper {
 
     @Override
     public Object createContext(Object data) {
+        List<String> result = new ArrayList<String>();
         if (data instanceof StringTemplate) {
-            return ((StringTemplate)data).getText();
+            result.add(((StringTemplate)data).getHtmlBody());
+            result.add(((StringTemplate)data).getTextBody());
+            return result;
         }
         throw new RuntimeException("このテンプレートを利用する場合、メールオブジェクトは[" + StringTemplate.class.getName() + "]を継承する必要があります。");
     }

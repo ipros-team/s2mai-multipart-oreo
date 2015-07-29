@@ -20,6 +20,9 @@ package jp.troter.seasar.mai.template;
  */
 public interface StringTemplate {
 
-    /** メール本文 */
-    String getText();
+    /** メール本文（HTML） */
+    String getHtmlBody();
+
+    /** メール本文（TEXT） */
+    String getTextBody();
 }

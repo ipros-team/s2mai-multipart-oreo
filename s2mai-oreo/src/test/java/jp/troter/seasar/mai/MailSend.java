@@ -59,8 +59,11 @@ public interface MailSend {
         /** サブジェクト */
         private String subject;
 
-        /** 本文用 */
-        private String text;
+        /** 本文用（HTML） */
+        private String htmlBody;
+
+        /** 本文用（TEXT） */
+        private String textBody;
 
         /** メール本文形式（true:html形式、false:テキスト形式) */
         private boolean html = false;
@@ -130,15 +133,23 @@ public interface MailSend {
             this.subject = subject;
         }
 
-        public String getText() {
-            return text;
-        }
+        public String getHtmlBody() {
+			return htmlBody;
+		}
 
-        public void setText(String text) {
-            this.text = text;
-        }
+		public void setHtmlBody(String htmlBody) {
+			this.htmlBody = htmlBody;
+		}
 
-        public boolean isHtml() {
+		public String getTextBody() {
+			return textBody;
+		}
+
+		public void setTextBody(String textBody) {
+			this.textBody = textBody;
+		}
+
+		public boolean isHtml() {
             return html;
         }
 

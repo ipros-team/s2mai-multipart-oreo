@@ -17,6 +17,8 @@ package jp.troter.seasar.mai.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.troter.seasar.mai.MessageTypeSwichable;
 
@@ -68,8 +70,8 @@ public class S2MaiOreoInterceptor extends AbstractInterceptor {
         init();
         MaiMetaData metaData = maiMetaDataFactory.getMaiMetaData(getTargetClass(invocation));
         Object bean = getBean(invocation);
-        Object context = contextHelper.createContext(bean);
-        Mail mail = createMail(method, context, metaData);
+        Object contexts = contextHelper.createContext(bean);
+        Mail mail = createMail(method, contexts, metaData);
         propertyWriter.setMailProperty(mail, bean);
 
         processMailMessageType(mail, bean);
@@ -120,16 +122,15 @@ public class S2MaiOreoInterceptor extends AbstractInterceptor {
         transport.send(mail, sendMail);
     }
 
-    private Mail createMail(Method method, Object context, MaiMetaData metaData) {
+    @SuppressWarnings("unchecked")
+    private Mail createMail(Method method, Object contexts, MaiMetaData metaData) {
         Mail mail = metaData.getMail(method);
         String path = metaData.getTemplatePath(method);
-        String text = templateProcessor.processResource(path, context);
-        String subject = MailTextUtil.getSubject(text);
-        text = MailTextUtil.getText(text);
-        if (subject != null) {
-            mail.setSubject(subject);
-        }
-        mail.setText(text);
+        List<String> list = (ArrayList<String>)contexts;
+        String htmlBody = templateProcessor.processResource(path, list.get(0) == null ? "" : list.get(0));
+        String textBody = templateProcessor.processResource(path, list.get(1) == null ? "" : list.get(1));
+        mail.setHtmlText(MailTextUtil.getText(htmlBody));
+        mail.setText(MailTextUtil.getText(textBody));
         return mail;
     }
 

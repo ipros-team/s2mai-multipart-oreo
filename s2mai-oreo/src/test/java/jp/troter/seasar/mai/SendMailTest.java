@@ -36,24 +36,22 @@ public class SendMailTest {
 
     public void send(MailSendFactory factory, MailCharset charset) {
         MailSend sender = factory.getMailSender(charset);
-        sender.sendMail(createMailText(mailAddress, mailAddress, "テキストメールサンプル(" + charset.getCharset() + ")", TextUtil.readUTF8("sample.txt")));
-        sender.sendMail(createMailHtml(mailAddress, mailAddress, "HTMLメールサンプル(" + charset.getCharset() + ")", TextUtil.readUTF8("sample.html")));
+        sender.sendMail(createMailForMultipart(mailAddress, mailAddress, "Multipartメールサンプル(" + charset.getCharset() + ")", TextUtil.readUTF8("sample.html"), TextUtil.readUTF8("sample.txt")));
+        sender.sendMail(createMailForMultipart(mailAddress, mailAddress, "HTMLメールサンプル(" + charset.getCharset() + ")", TextUtil.readUTF8("sample.html"), null));
+        sender.sendMail(createMailForMultipart(mailAddress, mailAddress, "TEXTメールサンプル(" + charset.getCharset() + ")", null, TextUtil.readUTF8("sample.txt")));
     }
 
-    public Mail createMailText(String from, String to, String subject, String text) {
-        return createMail(from, to, subject, text, false);
-    }
-    public Mail createMailHtml(String from, String to, String subject, String text) {
-        return createMail(from, to, subject, text, true);
+    public Mail createMailForMultipart(String from, String to, String subject, String htmlBody, String textBody) {
+        return createMail(from, to, subject, htmlBody, textBody);
     }
 
-    public Mail createMail(String from, String to, String subject, String text, boolean html) {
+    public Mail createMail(String from, String to, String subject, String htmlBody, String textBody) {
         Mail m = new Mail();
         m.setFrom(new MailAddress(from));
         m.setTo(to);
         m.setSubject(subject);
-        m.setText(text);
-        m.setHtml(html);
+        m.setHtmlBody(htmlBody);
+        m.setTextBody(textBody);
         return m;
     }
 

@@ -4,7 +4,7 @@
 <components>
 
   <component name="mailAddress" class="java.lang.String">
-    <arg>"trot.thunder@gmail.com"</arg>
+    <arg>"sample@sample.com"</arg>
   </component>
 
 </components>
