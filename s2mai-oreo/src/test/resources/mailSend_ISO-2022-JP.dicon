@@ -4,11 +4,11 @@
 <components>
   <include path="s2mai-core.dicon"/>
 
-  <component name="stringContextHelper" class="jp.troter.seasar.mai.template.impl.StringContextHelperImpl"/>
-  <component name="stringProcessor" class="jp.troter.seasar.mai.template.impl.StringProcessor"/>
-  <component class="jp.troter.seasar.mai.mail.impl.LoggingTransportImpl" />
+  <component name="stringContextHelper" class="jp.ipros.seasar.mai.template.impl.StringContextHelperImpl"/>
+  <component name="stringProcessor" class="jp.ipros.seasar.mai.template.impl.StringProcessor"/>
+  <component class="jp.ipros.seasar.mai.mail.impl.LoggingTransportImpl" />
 
-  <component name="maiInterceptor" class="jp.troter.seasar.mai.interceptor.S2MaiOreoInterceptor">
+  <component name="maiInterceptor" class="jp.ipros.seasar.mai.interceptor.S2MaiOreoInterceptor">
     <property name="contextHelper">stringContextHelper</property>
     <property name="templateProcessor">stringProcessor</property>
   </component>
@@ -25,7 +25,7 @@
     <property name="charset">"ISO-2022-JP"</property>
   </component>
 
-  <component class="jp.troter.seasar.mai.MailSend">
+  <component class="jp.ipros.seasar.mai.MailSend">
     <aspect>maiInterceptor</aspect>
   </component>
 
